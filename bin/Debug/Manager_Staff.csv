@@ -1,0 +1,2 @@
+StaffID,StaffType,Title,FirstName,LastName,MiddleInitial,HomePhone,CellPhone,OfficeExtension,IRDNumber,Status,ManagerID
+3,Manager,Mrs,Alice,Johnson,C,555-666-7777,888-999-0000,9876,IRD789,Active,
