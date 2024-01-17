@@ -212,36 +212,44 @@ namespace EvaluationProject
             
         }
 
-        private  void ExportDataToCSV()
+        private void ExportDataToCSV()
         {
             List<Staff> staffList = allStaff;
 
             // Group the staff list by Staff Type
             var groupedByStaffType = staffList.GroupBy(s => s.StaffType);
 
-            foreach (var group in groupedByStaffType)
+            // Create a SaveFileDialog
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                string csvFileName = $"{group.Key}_Staff.csv";
-                using (StreamWriter writer = new StreamWriter(csvFileName))
+                saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                saveFileDialog.Title = "Export CSV File";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Write header to CSV
-                    writer.WriteLine("StaffID,StaffType,Title,FirstName,LastName,MiddleInitial,HomePhone,CellPhone,OfficeExtension,IRDNumber,Status,ManagerID");
+                    string fullFilePath = saveFileDialog.FileName;
+                    string csv = "";
 
-                    // Write data to CSV
-                    foreach (Staff staff in group.OrderBy(s => s.FirstName))
+                    foreach (var group in groupedByStaffType)
                     {
-                        writer.WriteLine($"{staff.StaffID},{staff.StaffType},{staff.Title},{staff.FirstName},{staff.LastName}," +
-                            $"{staff.MiddleInitial},{staff.HomePhone},{staff.CellPhone},{staff.OfficeExtension},{staff.IRDNumber},{staff.Status},{staff.ManagerID}");
+                        csv += string.Join("\n", group.OrderBy(s => s.FirstName)
+                                .Select(staff => $"{staff.StaffID},{staff.StaffType},{staff.Title},{staff.FirstName},{staff.LastName}," +
+                                                $"{staff.MiddleInitial},{staff.HomePhone},{staff.CellPhone},{staff.OfficeExtension}," +
+                                                $"{staff.IRDNumber},{staff.Status},{staff.ManagerID}"));
+                        csv += "\n";
                     }
-                }
 
-                Console.WriteLine($"Exported data for {group.Key} to {csvFileName}");
+                    File.WriteAllText(fullFilePath, csv);
+                }
             }
         }
+
+
 
         private void button4_Click(object sender, EventArgs e)
         {
             ExportDataToCSV();
+            MessageBox.Show("Successfully exported", "Success");
         }
     }
 }

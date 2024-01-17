@@ -1,5 +1,0 @@
-StaffID,StaffType,Title,FirstName,LastName,MiddleInitial,HomePhone,CellPhone,OfficeExtension,IRDNumber,Status,ManagerID
-9,Employee,Mr,Harry,Smith,K,02202020,10101010,202,101010,Active,3
-1,Employee,Mr,John,Doe,A,123-456-7890,987-654-3210,1234,IRD123,Active,
-4,Employee,Sir,Robert,Williams,D,777-888-9999,111-222-3333,4321,IRD321,Inactive,3
-8,Employee,Miss,Sarah,Smith,J,10120120,1012020,101,102020202,Active,
